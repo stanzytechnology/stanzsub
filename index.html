@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <title>StanzSub — Fast Payments & Digital Services</title>
+  <meta property="og:title" content="StanzSub — Fast Payments & Digital Services">
+  <meta property="og:description" content="Reliable, instant & secure. StanzSub handles your digital payments, subscriptions, gift cards, crypto, website design, and more — all in one place.">
+  <meta property="og:image" content="images/hero-phone.png">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --bg:#050510; --bg2:#0a0a20;
+      --card:rgba(255,255,255,0.04); --card-h:rgba(255,255,255,0.07);
+      --purple:#7c3aed; --violet:#8b5cf6; --cyan:#06b6d4; --accent:#a78bfa;
+      --text:#e2e8f0; --muted:#94a3b8; --border:rgba(255,255,255,0.08);
+      --glow-p:rgba(124,58,237,0.35);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); opacity:.6; }
+    .mesh { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+    .mesh span { position:absolute; border-radius:50%; filter:blur(130px); }
+    .m1 { width:700px; height:700px; background:rgba(124,58,237,.16); top:-15%; left:-10%; }
+    .m2 { width:550px; height:550px; background:rgba(6,182,212,.1); bottom:0; right:-8%; }
+    .m3 { width:450px; height:450px; background:rgba(236,72,153,.07); top:45%; left:38%; }
+    .g { background:linear-gradient(135deg,#a78bfa 0%,#06b6d4 55%,#ec4899 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .g2 { background:linear-gradient(135deg,#7c3aed,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    section,nav,footer { position:relative; z-index:1; }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; height:68px; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; background:rgba(5,5,16,.75); backdrop-filter:blur(22px); border-bottom:1px solid var(--border); transition:box-shadow .3s; }
+    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.35rem; }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:.9rem; font-weight:500; transition:color .2s; }
+    .nav-links a:hover { color:white; }
+    .nav-cta { background:linear-gradient(135deg,var(--purple),var(--violet)); color:white; border:none; padding:.55rem 1.25rem; border-radius:.6rem; font-family:'DM Sans',sans-serif; font-weight:600; font-size:.9rem; cursor:pointer; box-shadow:0 0 20px var(--glow-p); transition:all .3s; }
+    .nav-cta:hover { transform:translateY(-2px); box-shadow:0 4px 25px var(--glow-p); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+    .hamburger span { display:block; width:22px; height:2px; background:white; border-radius:2px; }
+    .mob-menu { display:none; position:fixed; top:68px; left:0; right:0; z-index:99; background:rgba(5,5,16,.96); backdrop-filter:blur(20px); padding:1.5rem 2rem; border-bottom:1px solid var(--border); flex-direction:column; gap:1.2rem; }
+    .mob-menu.open { display:flex; }
+    .mob-menu a { color:var(--text); text-decoration:none; font-size:1.05rem; font-weight:500; }
+
+    /* HERO */
+    .hero { min-height:100vh; display:flex; align-items:center; padding:100px 2rem 4rem; }
+    .hero-in { max-width:1200px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .badge { display:inline-flex; align-items:center; gap:.5rem; padding:.35rem 1rem; border-radius:999px; background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.3); color:var(--accent); font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:1.5rem; }
+    .bdot { width:6px; height:6px; border-radius:50%; background:#4ade80; box-shadow:0 0 6px #4ade80; animation:pdot 2s infinite; }
+    @keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.5)} }
+    /* === SLOW MOTION ANIMATIONS === */
+    @keyframes slowFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
+    @keyframes slowPulse { 0%,100%{opacity:.8;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
+    @keyframes slowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+    .slow-anim { animation:slowFloat 6s ease-in-out infinite !important; }
+    .slow-pulse { animation:slowPulse 8s ease-in-out infinite !important; }
+    /* === END SLOW MOTION ANIMATIONS === */
+    .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2.3rem,4.5vw,3.7rem); font-weight:800; line-height:1.1; letter-spacing:-.03em; margin-bottom:1.25rem; }
+    .hero-desc { font-size:1.05rem; color:var(--muted); line-height:1.7; margin-bottom:2.5rem; max-width:460px; }
+    .btns { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .btn-p { background:linear-gradient(135deg,var(--purple),var(--violet)); color:white; padding:.85rem 2rem; border-radius:.75rem; font-family:'DM Sans',sans-serif; font-weight:600; font-size:1rem; border:none; cursor:pointer; box-shadow:0 0 25px var(--glow-p); transition:all .3s; text-decoration:none; display:inline-flex; align-items:center; gap:.5rem; }
+    .btn-p:hover { transform:translateY(-3px); box-shadow:0 8px 30px var(--glow-p); }
+    .btn-g { background:transparent; color:white; padding:.85rem 2rem; border-radius:.75rem; font-family:'DM Sans',sans-serif; font-weight:600; font-size:1rem; border:1px solid var(--border); cursor:pointer; transition:all .3s; display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; }
+    .btn-g:hover { border-color:rgba(124,58,237,.5); background:rgba(124,58,237,.08); }
+    .trust { display:flex; align-items:center; gap:1rem; }
+    .avs { display:flex; }
+    .av { width:32px; height:32px; border-radius:50%; border:2px solid var(--bg); margin-left:-9px; display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:700; color:white; }
+    .av:first-child { margin-left:0; }
+    .av1{background:linear-gradient(135deg,#7c3aed,#06b6d4)} .av2{background:linear-gradient(135deg,#06b6d4,#ec4899)} .av3{background:linear-gradient(135deg,#ec4899,#f97316)} .av4{background:linear-gradient(135deg,#f97316,#eab308)}
+    .trust-t { font-size:.82rem; color:var(--muted); }
+    .trust-t strong { color:white; }
+
+    /* HERO VISUAL */
+    .hero-vis { position:relative; height:480px; display:flex; align-items:center; justify-content:center; }
+    .ring { position:absolute; border-radius:50%; border:1px solid rgba(124,58,237,.12); top:50%; left:50%; transform:translate(-50%,-50%); animation:rpulse 4s ease-in-out infinite; }
+    .ring1 { width:320px; height:320px; }
+    .ring2 { width:430px; height:430px; border-color:rgba(6,182,212,.07); animation-delay:1.2s; }
+    @keyframes rpulse { 0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.04)} } /* SLOW ANIMATION: 8s instead of 4s */
+    .ring1, .ring2 { animation-duration:10s !important; } /* Slower ring pulse */
+    .pcard-main { animation:cfloat 8s ease-in-out infinite !important; }
+    .cstack { position:relative; width:260px; z-index:2; }
+    .pcard { width:260px; height:160px; border-radius:1.25rem; padding:1.25rem; position:relative; overflow:hidden; }
+    .pcard-b2 { position:absolute; bottom:-28px; left:20px; right:20px; height:160px; background:rgba(6,182,212,.06); border:1px solid rgba(6,182,212,.12); border-radius:1.25rem; }
+    .pcard-b1 { position:absolute; bottom:-14px; left:10px; right:10px; height:160px; background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.18); border-radius:1.25rem; backdrop-filter:blur(6px); }
+    .pcard-main { background:linear-gradient(135deg,#2d1b69 0%,#1a0a3e 60%,#0c0028 100%); border:1px solid rgba(124,58,237,.4); box-shadow:0 25px 60px rgba(0,0,0,.6),0 0 40px rgba(124,58,237,.3); z-index:3; position:relative; animation:cfloat 6s ease-in-out infinite; }
+    @keyframes cfloat { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-14px) rotate(-2deg)} }\n    .pcard-main { animation:cfloat 10s ease-in-out infinite; }
+    .earth-art { position:absolute; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(96,165,250,.35), rgba(10,12,40,.92)); box-shadow:0 0 45px rgba(6,182,212,.18); top:60%; left:65%; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; z-index:2; opacity:.95; }
+    .earth-core { width:90px; height:90px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #7c3aed 35%, #0d1532 100%); box-shadow:0 0 18px rgba(124,58,237,.35); position:relative; }
+    .earth-core::before { content:''; position:absolute; inset:12px; border-radius:50%; background:rgba(255,255,255,.08); }
+    .earth-pin { position:absolute; width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.95); box-shadow:0 0 18px rgba(255,255,255,.6); transform-origin:90px 90px; }
+    .earth-pin1 { top:10px; left:90px; animation:orbit 12s linear infinite; }
+    .earth-pin2 { top:90px; left:170px; animation:orbit 16s linear reverse infinite; }
+    .earth-pin3 { top:170px; left:90px; animation:orbit 14s linear infinite; }
+    .earth-pin4 { top:90px; left:10px; animation:orbit 10s linear reverse infinite; }
+    .earth-ring { position:absolute; border-radius:999px; border:1px solid rgba(255,255,255,.14); }
+    .earth-ring1 { width:220px; height:220px; animation:spin 18s linear infinite; }
+    .earth-ring2 { width:160px; height:160px; animation:spin 14s linear reverse infinite; }
+    @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+    @keyframes orbit { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+    .chip { width:36px; height:28px; background:linear-gradient(135deg,#fde68a,#f59e0b); border-radius:5px; margin-bottom:1.5rem; position:relative; z-index:1; }
+    .chip::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:20px; height:14px; border:1px solid rgba(0,0,0,.2); border-radius:3px; }
+    .cnum { font-family:'Syne',monospace; font-size:.82rem; letter-spacing:.18em; color:rgba(255,255,255,.65); margin-bottom:.5rem; position:relative; z-index:1; }
+    .cname { font-size:.72rem; font-weight:600; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.1em; position:relative; z-index:1; }
+    .clogo-c { position:absolute; bottom:1.25rem; right:1.25rem; font-family:'Syne',sans-serif; font-weight:800; font-size:.85rem; z-index:1; }
+    .notif { position:absolute; background:rgba(8,8,24,.88); backdrop-filter:blur(16px); border:1px solid var(--border); border-radius:.85rem; padding:.65rem .9rem; display:flex; align-items:center; gap:.7rem; box-shadow:0 8px 30px rgba(0,0,0,.45); white-space:nowrap; z-index:10; }
+    .ni { width:34px; height:34px; border-radius:.5rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.1rem; }
+    .ni img { width:20px; height:20px; object-fit:contain; }
+    .nt { font-size:.76rem; font-weight:600; }
+    .ns { font-size:.66rem; color:var(--muted); }
+    .n1 { top:20px; right:-25px; animation:nf1 8s ease-in-out infinite; }
+    .n2 { bottom:55px; left:-35px; animation:nf2 10s ease-in-out infinite .8s; }
+    .n3 { top:175px; left:-45px; animation:nf1 12s ease-in-out infinite 1.6s; }
+    @keyframes nf1{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes nf2{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+    /* STATS */
+    .stats { padding:3.5rem 2rem; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:rgba(0,0,0,.25); }
+    .stats-in { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; text-align:center; }
+    .snum { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; letter-spacing:-.03em; line-height:1; margin-bottom:.3rem; }
+    .slbl { font-size:.82rem; color:var(--muted); font-weight:500; }
+
+    /* SERVICES */
+    .services { padding:6rem 2rem; }
+    .sec-lbl { display:flex; align-items:center; justify-content:center; gap:.75rem; margin-bottom:.75rem; }
+    .sec-lbl span { font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+    .sec-lbl::before,.sec-lbl::after { content:''; flex:1; max-width:60px; height:1px; }
+    .sec-lbl::before { background:linear-gradient(90deg,transparent,rgba(124,58,237,.4)); }
+    .sec-lbl::after { background:linear-gradient(90deg,rgba(124,58,237,.4),transparent); }
+    .sec-title { font-family:'Syne',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; text-align:center; letter-spacing:-.03em; margin-bottom:.85rem; }
+    .sec-sub { text-align:center; color:var(--muted); font-size:.98rem; max-width:520px; margin:0 auto 3.5rem; line-height:1.65; }
+    .sgrid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1.2rem; }
+    .scard { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.75rem; transition:all .4s cubic-bezier(.16,1,.3,1); position:relative; overflow:hidden; }
+    .scard::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent); opacity:0; transition:opacity .4s; }
+    .scard:hover::before { opacity:1; }
+    .scard:hover { transform:translateY(-6px); border-color:rgba(124,58,237,.3); background:var(--card-h); box-shadow:0 20px 40px rgba(0,0,0,.3); }
+    .shead { display:flex; align-items:center; ga p:.85rem; margin-bottom:1.25rem; }
+    .sicon { width:44px; height:44px; border-radius:.75rem; display:flex; align-items:center; justify-content:center; font-size:1.25rem; flex-shrink:0; }
+    .sicon img { width:26px; height:26px; object-fit:contain; }
+    .stname { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; }
+    .tags { display:flex; flex-wrap:wrap; gap:.45rem; }
+    .tag { display:inline-flex; align-items:center; gap:.4rem; padding:.32rem .68rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:.5rem; font-size:.76rem; color:var(--muted); transition:all .2s; cursor:default; }
+    .tag:hover { background:rgba(124,58,237,.1); border-color:rgba(124,58,237,.3); color:white; }
+    .tag img { width:16px; height:16px; object-fit:contain; border-radius:3px; flex-shrink:0; }
+    .tag-ico { display:inline-flex; width:16px; height:16px; border-radius:3px; align-items:center; justify-content:center; font-size:.55rem; font-weight:900; flex-shrink:0; color:white; }
+    .sdesc { color:var(--muted); font-size:.92rem; line-height:1.7; margin:1rem 0 1.2rem; }
+    .request-btn { background:linear-gradient(135deg,var(--purple),var(--violet)); border:none; color:white; padding:.85rem 1rem; border-radius:.95rem; font-weight:700; font-size:.92rem; cursor:pointer; transition:all .25s ease; width:100%; text-align:center; }
+    .request-btn:hover { transform:translateY(-2px); box-shadow:0 14px 28px rgba(124,58,237,.25); }
+    .service-form { display:grid; gap:1rem; text-align:left; }
+    .service-form .form-row { display:grid; gap:1rem; grid-template-columns:repeat(2,1fr); }
+    .service-form label { display:flex; flex-direction:column; gap:.5rem; font-size:.82rem; color:var(--muted); font-weight:600; }
+    .service-form input, .service-form textarea, .service-form select { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:.95rem; color:white; padding:.95rem 1rem; outline:none; font-family:'DM Sans',sans-serif; font-size:.95rem; }
+    .service-form textarea { min-height:140px; resize:vertical; }
+    .service-form .submit-group { display:flex; justify-content:flex-end; }
+    .service-form .form-note { color:var(--muted); font-size:.9rem; }
+    .service-form .honeypot { position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+    .sec-small { color:rgba(255,255,255,.75); text-align:center; margin-top:.8rem; margin-bottom:1.5rem; font-size:.92rem; }
+    .policy { padding:4rem 2rem; background:rgba(255,255,255,.05); }
+    .policy-box { max-width:860px; margin:0 auto; border:1px solid rgba(124,58,237,.2); background:rgba(255,255,255,.03); border-radius:1.25rem; padding:2.5rem; }
+    .policy-list { list-style:disc; padding-left:1.25rem; color:var(--muted); margin-top:1rem; }
+    .policy-list li { margin-bottom:.75rem; line-height:1.7; }
+    .service-form select { appearance:none; -webkit-appearance:none; -moz-appearance:none; }
+    @media(max-width:900px){ .service-form .form-row { grid-template-columns:1fr; } }
+
+    /* HOW */
+    .how { padding:6rem 2rem; background:linear-gradient(180deg,transparent,rgba(124,58,237,.04),transparent); }
+    .steps { max-width:860px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; position:relative; }
+    .steps::before { content:''; position:absolute; top:36px; left:calc(50% - 200px); right:calc(50% - 200px); height:1px; background:linear-gradient(90deg,var(--purple),var(--cyan)); opacity:.25; }
+    .steps::after { content:''; position:absolute; top:36px; left:calc(50% + 200px); right:calc(50% + 200px); height:1px; background:linear-gradient(90deg,var(--cyan),var(--purple)); opacity:.25; }
+    .step { text-align:center; }
+    .step-n { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(6,182,212,.2)); border:1px solid rgba(124,58,237,.3); display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem; font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--accent); }
+    .step h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:.98rem; margin-bottom:.5rem; }
+    .step p { font-size:.86rem; color:var(--muted); line-height:1.65; }
+
+    /* CONTACT */
+    .contact { padding:6rem 2rem; }
+    .cin { max-width:800px; margin:0 auto; }
+    .cgrid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .ccard { display:flex; align-items:center; gap:1.25rem; padding:1.75rem; background:var(--card); border:1px solid var(--border); border-radius:1.25rem; text-decoration:none; color:var(--text); transition:all .3s; cursor:pointer; }
+    .ccard:hover { border-color:rgba(124,58,237,.4); background:rgba(124,58,237,.06); transform:translateY(-3px); }
+    .c-icon { width:50px; height:50px; border-radius:.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .c-icon img, .c-icon svg { width:26px; height:26px; object-fit:contain; }
+    .c-lbl { font-size:.72rem; color:var(--muted); margin-bottom:.2rem; font-weight:500; }
+    .c-val { font-weight:600; font-size:.92rem; }
+    .cinfo { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2.5rem; }
+    .cta-box { background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(6,182,212,.1)); border:1px solid rgba(124,58,237,.3); border-radius:1.25rem; padding:3rem 2rem; text-align:center; }
+    .cta-box h3 { font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800; margin-bottom:.6rem; }
+    .cta-box p { color:var(--muted); margin-bottom:1.75rem; }
+
+    /* FOOTER */
+    footer { border-top:1px solid var(--border); padding:2.5rem 2rem; background:rgba(0,0,0,.3); }
+    .fin { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .flogo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; }
+    .fco { font-size:.78rem; color:var(--muted); margin-top:.2rem; }
+    .fbadges { display:flex; gap:.6rem; }
+    .fb { display:inline-flex; align-items:center; gap:.3rem; font-size:.72rem; color:var(--muted); padding:.28rem .65rem; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:999px; }
+    .fbd { width:5px; height:5px; border-radius:50%; }
+
+    /* === SEARCH BAR SECTION === */
+    .search-section { padding:3.5rem 2rem; background:linear-gradient(180deg,rgba(124,58,237,.08),transparent); }
+    .search-container { max-width:700px; margin:0 auto; }
+    .search-bar { display:flex; gap:.75rem; align-items:center; background:rgba(255,255,255,.06); border:1px solid rgba(124,58,237,.3); border-radius:1.25rem; padding:1.2rem 1.5rem; backdrop-filter:blur(10px); transition:all .4s cubic-bezier(.16,1,.3,1); }
+    .search-bar:hover, .search-bar:focus-within { background:rgba(255,255,255,.09); border-color:rgba(124,58,237,.6); box-shadow:0 8px 32px rgba(124,58,237,.2); }
+    .search-bar input { flex:1; background:none; border:none; color:white; font-size:1rem; font-family:'DM Sans',sans-serif; outline:none; }
+    .search-bar input::placeholder { color:rgba(255,255,255,.4); }
+    .search-btn { background:linear-gradient(135deg,var(--purple),var(--violet)); border:none; color:white; padding:.65rem 1.5rem; border-radius:.75rem; cursor:pointer; font-weight:600; font-size:.9rem; transition:all .3s; box-shadow:0 4px 15px rgba(124,58,237,.3); }
+    .search-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,.4); }
+    /* === END SEARCH BAR === */
+
+    /* === TESTIMONIALS SECTION === */
+    .testimonials { padding:6rem 2rem; background:transparent; }
+    .tgrid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; }
+    .tcard { background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:2rem; transition:all .5s cubic-bezier(.16,1,.3,1); animation:slowPulse 8s ease-in-out infinite; }
+    .tcard:hover { transform:translateY(-8px); border-color:rgba(124,58,237,.4); background:rgba(124,58,237,.08); box-shadow:0 20px 50px rgba(124,58,237,.15); }
+    .stars { display:flex; gap:.3rem; margin-bottom:.75rem; font-size:.95rem; }
+    .tcontent { font-size:.95rem; color:var(--muted); line-height:1.8; margin-bottom:1.5rem; font-style:italic; }
+    .tauthor { display:flex; align-items:center; gap:.8rem; }
+    .tavatar { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:white; font-size:.9rem; flex-shrink:0; }
+    .tname { font-weight:700; font-size:.92rem; }
+    .ttitle { font-size:.78rem; color:var(--muted); }
+    /* === END TESTIMONIALS === */
+
+    .dashboard { padding:2.5rem 2rem 3.5rem; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.2fr .8fr; gap:1.5rem; }
+    .db-panel { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:1.5rem; padding:2rem; position:relative; overflow:hidden; }
+    .db-panel::before { content:''; position:absolute; top:-30px; right:-30px; width:140px; height:140px; background:radial-gradient(circle, rgba(124,58,237,.18), transparent 60%); border-radius:50%; }
+    .db-title { display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; position:relative; z-index:1; }
+    .dot { width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,#7c3aed,#06b6d4); box-shadow:0 0 18px rgba(124,58,237,.4); }
+    .db-title h3 { font-family:'Syne',sans-serif; font-size:1.45rem; margin:0; }
+    .db-desc { color:var(--muted); margin-bottom:1.75rem; max-width:520px; line-height:1.7; position:relative; z-index:1; }
+    .db-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:1rem; position:relative; z-index:1; }
+    .db-card { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); border-radius:1rem; padding:1.1rem 1.25rem; }
+    .db-card strong { display:block; font-size:1.8rem; color:white; margin-bottom:.4rem; font-family:'Syne',sans-serif; }
+    .db-card span { color:var(--muted); font-size:.9rem; line-height:1.6; }
+    .db-side { display:grid; gap:1rem; }
+    .db-side .db-panel { padding:1.75rem; }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(26px); transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1); }
+    .reveal.vis { opacity:1; transform:none; }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s} .d4{transition-delay:.4s}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .hero-in{grid-template-columns:1fr;text-align:center}
+      .hero-desc{margin:0 auto 2.5rem}
+      .btns{justify-content:center}
+      .trust{justify-content:center}
+      .hero-vis{height:350px;margin-top:2rem}
+      .dashboard{grid-template-columns:1fr}
+      .stats-in{grid-template-columns:repeat(2,1fr)}
+      .steps{grid-template-columns:1fr}.steps::before{display:none}
+      .cgrid{grid-template-columns:1fr}
+      .cinfo{grid-template-columns:1fr}
+      .nav-links,.nav-cta{display:none}
+      .hamburger{display:flex}
+    }
+    @media(max-width:580px){
+      .n3{display:none}
+      .fin{flex-direction:column;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<div class="mesh" aria-hidden="true">
+  <span class="m1"></span><span class="m2"></span><span class="m3"></span>
+</div>
+
+<!-- NAV -->
+<nav id="topnav">
+  <div class="nav-logo"><span class="g">StanzSub</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started →</button>
+  <button class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-menu" id="mob">
+  <a href="#services" onclick="document.getElementById('mob').classList.remove('open')">Services</a>
+  <a href="#testimonials" onclick="document.getElementById('mob').classList.remove('open')">Reviews</a>
+  <a href="#how" onclick="document.getElementById('mob').classList.remove('open')">How It Works</a>
+  <a href="#contact" onclick="document.getElementById('mob').classList.remove('open')">Contact</a>
+  <button class="btn-p" style="width:100%;justify-content:center;margin-top:.5rem" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});document.getElementById('mob').classList.remove('open')">Get Started →</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="badge"><span class="bdot"></span> Live &amp; Accepting Orders</div>
+      <h1><span class="g">Fast Payments,</span><br>Subscriptions &amp;<br>Digital Services</h1>
+      <p class="hero-desc">Reliable, instant & secure. StanzSub handles your digital payments, subscriptions, gift cards, crypto, website design, and more — all in one place.</p>
+      <p class="hero-desc" style="margin-top:1rem; color:rgba(255,255,255,.68); font-size:.98rem; max-width:520px;">Trusted worldwide for fast transfer delivery, instant payments, and custom website design.</p>
+      <div class="btns">
+        <a href="#contact" class="btn-p">Contact Me →</a>
+        <a href="#services" class="btn-g">View Services</a>
+      </div>
+      <div class="trust">
+        <div class="avs">
+          <div class="av av1">AK</div><div class="av av2">JB</div>
+          <div class="av av3">SL</div><div class="av av4">RM</div>
+        </div>
+        <div class="trust-t"><strong>500+</strong> satisfied customers worldwide</div>
+      </div>
+    </div>
+
+    <div class="hero-vis">
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div class="cstack">
+        <div class="pcard-b2"></div>
+        <div class="pcard-b1"></div>
+        <div class="pcard pcard-main">
+          <div class="chip"></div>
+          <div class="cnum">•••• •••• •••• 4721</div>
+          <div class="cname">StanzSub Digital</div>
+          <div class="clogo-c"><span class="g">SS</span></div>
+        </div>
+      </div>
+      <div class="earth-art reveal d2" aria-hidden="true">
+        <div class="earth-ring earth-ring1"></div>
+        <div class="earth-ring earth-ring2"></div>
+        <div class="earth-core"></div>
+        <div class="earth-pin earth-pin1"></div>
+        <div class="earth-pin earth-pin2"></div>
+        <div class="earth-pin earth-pin3"></div>
+        <div class="earth-pin earth-pin4"></div>
+      </div>
+      <div class="notif n1">
+        <div class="ni" style="background:rgba(0,214,50,.12)">
+          <img src="https://cdn.simpleicons.org/cashapp/00D632" alt="" onerror="this.parentNode.textContent='💸'">
+        </div>
+        <div><div class="nt">Payment Received</div><div class="ns">CashApp · +$120.00</div></div>
+      </div>
+      <div class="notif n2">
+        <div class="ni" style="background:rgba(229,9,20,.12)">
+          <img src="https://cdn.simpleicons.org/netflix/E50914" alt="" onerror="this.parentNode.textContent='📺'">
+        </div>
+        <div><div class="nt">Netflix Activated</div><div class="ns">Subscription confirmed ✓</div></div>
+      </div>
+      <div class="notif n3">
+        <div class="ni" style="background:rgba(247,147,26,.12)">
+          <img src="https://cdn.simpleicons.org/bitcoin/F7931A" alt="" onerror="this.parentNode.textContent='₿'">
+        </div>
+        <div><div class="nt">BTC Sold</div><div class="ns">Instant payout sent</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard reveal d1">
+  <div class="db-panel">
+    <div class="db-title"><span class="dot"></span><h3>StanzSub Command Center</h3></div>
+    <p class="db-desc">A live dashboard built for instant service control, fast payment tracking, and worldwide digital coverage. This panel shows the speed, reach, and reliability that powers every request.</p>
+    <div class="db-grid">
+      <div class="db-card">
+        <strong>1,250+</strong>
+        <span>Instant orders processed</span>
+      </div>
+      <div class="db-card">
+        <strong>98%</strong>
+        <span>Same-day delivery success</span>
+      </div>
+      <div class="db-card">
+        <strong>45+</strong>
+        <span>Payment and service options</span>
+      </div>
+      <div class="db-card">
+        <strong>33</strong>
+        <span>Countries supported</span>
+      </div>
+    </div>
+  </div>
+  <div class="db-side">
+    <div class="db-panel">
+      <div class="db-title"><span class="dot"></span><h3>Live Insights</h3></div>
+      <p class="db-desc">Everything is optimized for speed, security, and clarity. Your requests are routed through our smartest pathways and delivered with real-time confidence.</p>
+      <div class="db-card">
+        <strong>Secure</strong>
+        <span>Verified transfers and protected order flow</span>
+      </div>
+      <div class="db-card">
+        <strong>Active</strong>
+        <span>24/7 support and instant customer replies</span>
+      </div>
+      <div class="db-card">
+        <strong>Smart</strong>
+        <span>Every service optimized for speed and reliability</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-in">
+    <div class="reveal d1"><div class="snum g2">500+</div><div class="slbl">Happy Customers</div></div>
+    <div class="reveal d2"><div class="snum g2">15+</div><div class="slbl">Services Offered</div></div>
+    <div class="reveal d3"><div class="snum g2">99.9%</div><div class="slbl">Delivery Rate</div></div>
+    <div class="reveal d4"><div class="snum g2">24/7</div><div class="slbl">Support Available</div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sec-lbl"><span>What We Offer</span></div>
+  <h2 class="sec-title">Our <span class="g">Services</span></h2>
+  <p class="sec-sub">Comprehensive digital solutions handled quickly and securely, tailored to your needs.</p>
+
+  <div class="sgrid">
+
+    <!-- Instant Payments -->
+    <div class="scard reveal d1">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(34,197,94,.1)">💸</div>
+        <div class="stname">Instant Payments</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/cashapp/00D632" alt="CashApp" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00D632;color:#000&quot;>$</span>'">
+          CashApp
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/paypal/169BD7" alt="PayPal" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#169BD7&quot;>P</span>'">
+          PayPal
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/zelle/5C1F7B" alt="Zelle" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#5C1F7B&quot;>Z</span>'">
+          Zelle
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/venmo/008CFF" alt="Venmo" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#008CFF&quot;>V</span>'">
+          Venmo
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/skrill/00A7E1" alt="Skrill" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00A7E1&quot;>S</span>'">
+          Skrill
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/payoneer/FF6E1A" alt="Payoneer" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FF6E1A&quot;>P</span>'">
+          Payoneer
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/googlepay/000000" alt="Google Pay" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000&quot;>G</span>'">
+          Google Pay
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/applepay/000000" alt="Apple Pay" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000;color:#fff&quot;>A</span>'">
+          Apple Pay
+        </span>
+      </div>
+      <p class="sdesc">Tell us the payment method, amount, and delivery speed you need so we can send your funds instantly.</p>
+      <button type="button" class="request-btn" onclick="selectService('Instant Payments')">Request Instant Payments</button>
+    </div>
+
+    <!-- Bank Transfers -->
+    <div class="scard reveal d2">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(59,130,246,.1)">🏦</div>
+        <div class="stname">Bank Transfers</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://logo.clearbit.com/chase.com" alt="Chase" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#117BCC&quot;>Ch</span>'">
+          Chase
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/hsbc.com" alt="HSBC" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#C20000&quot;>H</span>'">
+          HSBC
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/barclays.com" alt="Barclays" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#006BA6&quot;>B</span>'">
+          Barclays
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/sc.com" alt="Standard Chartered" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#004C99&quot;>SC</span>'">
+          Standard Chartered
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/santander.com" alt="Santander" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#EF1C24&quot;>S</span>'">
+          Santander
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/bankofamerica.com" alt="Bank of America" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#E31837&quot;>BoA</span>'">
+          Bank of America
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/citi.com" alt="Citi" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#056DAE&quot;>Ci</span>'">
+          Citi
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/capitalone.com" alt="Capital One" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#D03027&quot;>C1</span>'">
+          Capital One
+        </span>
+      </div>
+      <p class="sdesc">Share your bank, amount, and required delivery time so we can move funds safely and quickly.</p>
+      <button type="button" class="request-btn" onclick="selectService('Bank Transfers')">Request Bank Transfer</button>
+    </div>
+
+    <!-- International Transfers -->
+    <div class="scard reveal d3">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(168,85,247,.1)">🌍</div>
+        <div class="stname">International Transfers</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/westernunion/FFCC00" alt="Western Union" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FFCB00;color:#000&quot;>WU</span>'">
+          Western Union
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/moneygram/E4003A" alt="MoneyGram" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#E4003A&quot;>MG</span>'">
+          MoneyGram
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/wise/00B9FF" alt="Wise" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00B9FF&quot;>W</span>'">
+          Wise
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/remitly/5C3AF3" alt="Remitly" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#5C3AF3&quot;>R</span>'">
+          Remitly
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/sendwave.com" alt="Sendwave" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00C7B7&quot;>SW</span>'">
+          Sendwave
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/revolut/0070D1" alt="Revolut" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#0070D1&quot;>R</span>'">
+          Revolut
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/xoom.com" alt="Xoom" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#003DA5&quot;>X</span>'">
+          Xoom
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/worldremit.com" alt="WorldRemit" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FF4B13&quot;>WR</span>'">
+          WorldRemit
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/alipay/00A0E9" alt="Alipay" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00A0E9&quot;>A</span>'">
+          Alipay
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/payoneer/FF6E1A" alt="Payoneer" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FF6E1A&quot;>P</span>'">
+          Payoneer
+        </span>
+      </div>
+      <p class="sdesc">Tell us the destination country, currency, and amount so we can arrange a fast, global transfer.</p>
+      <button type="button" class="request-btn" onclick="selectService('International Transfers')">Request International Transfer</button>
+    </div>
+
+    <!-- Gift Cards -->
+    <div class="scard reveal d1">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(234,179,8,.1)">🎁</div>
+        <div class="stname">Gift Cards</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/amazon/FF9900" alt="Amazon" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FF9900;color:#000&quot;>A</span>'">
+          Amazon
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/apple/f0f0f0" alt="Apple" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#555&quot;>🍎</span>'">
+          Apple
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/googleplay/01875f" alt="Google Play" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#01875f&quot;>▶</span>'">
+          Google Play
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/xbox/107C10" alt="Xbox" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#107C10&quot;>X</span>'">
+          Xbox
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/playstation/003791" alt="PlayStation" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#003791&quot;>PS</span>'">
+          PlayStation
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/steam/000000" alt="Steam" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000;color:#fff&quot;>S</span>'">
+          Steam
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/roblox/010101" alt="Roblox" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000;color:#fff&quot;>R</span>'">
+          Roblox
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/apple/f0f0f0" alt="iTunes" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#555&quot;>i</span>'">
+          iTunes
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/walmart.com" alt="Walmart" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#0071CE&quot;>W</span>'">
+          Walmart
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/spotify/1DB954" alt="Spotify" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#1DB954&quot;>S</span>'">
+          Spotify
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/uber/000000" alt="Uber" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000;color:#fff&quot;>U</span>'">
+          Uber
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/nintendo/E60012" alt="Nintendo" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#E60012&quot;>N</span>'">
+          Nintendo
+        </span>
+      </div>
+      <p class="sdesc">Specify the brand, card value, and delivery type so we can fulfill your gift card order right away.</p>
+      <button type="button" class="request-btn" onclick="selectService('Gift Cards')">Request Gift Cards</button>
+    </div>
+
+    <!-- Virtual Numbers -->
+    <div class="scard reveal d2">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(6,182,212,.1)">📱</div>
+        <div class="stname">Virtual Numbers</div>
+      </div>
+      <div class="tags">
+        <span class="tag">🇺🇸 USA</span>
+        <span class="tag">🇬🇧 UK</span>
+        <span class="tag">🇩🇪 Germany</span>
+        <span class="tag">🇦🇺 Australia</span>
+        <span class="tag">🇨🇦 Canada</span>
+        <span class="tag">🇫🇷 France</span>
+        <span class="tag">🇮🇳 India</span>
+        <span class="tag">🇯🇵 Japan</span>
+        <span class="tag">🇧🇷 Brazil</span>
+        <span class="tag">🇲🇽 Mexico</span>
+        <span class="tag">🇮🇹 Italy</span>
+        <span class="tag">🇪🇸 Spain</span>
+        <span class="tag">🇸🇬 Singapore</span>
+        <span class="tag">🇦🇪 UAE</span>
+        <span class="tag">🇿🇦 South Africa</span>
+        <span class="tag">🇳🇱 Netherlands</span>
+        <span class="tag">🇵🇱 Poland</span>
+        <span class="tag">🇸🇪 Sweden</span>
+      </div>
+      <p class="sdesc">Let us know the country and intended use so we can provide the right virtual number quickly.</p>
+      <button type="button" class="request-btn" onclick="selectService('Virtual Numbers')">Request Virtual Number</button>
+    </div>
+
+    <!-- Subscriptions -->
+    <div class="scard reveal d3">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(239,68,68,.1)">📺</div>
+        <div class="stname">Subscriptions</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/netflix/E50914" alt="Netflix" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#E50914&quot;>N</span>'">
+          Netflix
+        </span>
+        <span class="tag">
+          <img src="https://logo.clearbit.com/primevideo.com" alt="Amazon Prime" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00A8E1&quot;>P</span>'">
+          Amazon Prime
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/disneyplus/113CCF" alt="Disney+" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#113CCF&quot;>D+</span>'">
+          Disney+
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/spotify/1DB954" alt="Spotify" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#1DB954&quot;>S</span>'">
+          Spotify
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/snapchat/FFFC00" alt="Snapchat+" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FFFC00;color:#000&quot;>👻</span>'">
+          Snapchat+
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/apple/f0f0f0" alt="Apple Music" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#555&quot;></span>'">
+          Apple Music
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/hulu/1CE783" alt="Hulu" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#1CE783;color:#000&quot;>H</span>'">
+          Hulu
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/xbox/107C10" alt="Xbox Game Pass" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#107C10&quot;>X</span>'">
+          Xbox Game Pass
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/playstation/003791" alt="PlayStation Plus" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#003791&quot;>PS</span>'">
+          PlayStation Plus
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/microsoft/7375D9" alt="Office 365" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#7375D9&quot;>O</span>'">
+          Office 365
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/canva/00C4CC" alt="Canva Pro" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00C4CC;color:#000&quot;>C</span>'">
+          Canva Pro
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/crunchyroll/F17105" alt="Crunchyroll" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#F17105&quot;>Cr</span>'">
+          Crunchyroll
+        </span>
+      </div>
+      <p class="sdesc">Tell us the service, account, and subscription details so we can set up everything for you.</p>
+      <button type="button" class="request-btn" onclick="selectService('Subscriptions')">Request Subscription</button>
+    </div>
+
+    <!-- Crypto -->
+    <div class="scard reveal d1">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(247,147,26,.1)">
+          <img src="https://cdn.simpleicons.org/bitcoin/F7931A" alt="Bitcoin" onerror="this.outerHTML='₿'" style="width:26px;height:26px">
+        </div>
+        <div class="stname">Crypto</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/bitcoin/F7931A" alt="BTC">
+          BTC
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/ethereum/627EEA" alt="ETH">
+          ETH
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/tether/26A17B" alt="USDT">
+          USDT
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/binance/F3BA2F" alt="BNB">
+          BNB
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/ripple/00AAE4" alt="XRP">
+          XRP
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/litecoin/A6A9AA" alt="LTC">
+          LTC
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/cardano/2B65E7" alt="ADA">
+          ADA
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/solana/00FFA3" alt="SOL">
+          SOL
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/dogecoin/C2A633" alt="DOGE">
+          DOGE
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/polygon/8247E5" alt="MATIC">
+          MATIC
+        </span>
+      </div>
+      <p class="sdesc">Describe the crypto pair, amount, and whether you need to buy or sell so we can prepare your order.</p>
+      <button type="button" class="request-btn" onclick="selectService('Crypto')">Request Crypto</button>
+    </div>
+
+    <!-- Website Design -->
+    <div class="scard reveal d4">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(59,130,246,.1)">💻</div>
+        <div class="stname">Website Design</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="Landing Pages" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#F24E1E&quot;>LP</span>'">
+          Landing Pages
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/shopify/95BF47" alt="E-commerce" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#95BF47&quot;>E</span>'">
+          E-commerce
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/dribbble/EA4C89" alt="Portfolio Sites" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#EA4C89&quot;>P</span>'">
+          Portfolio Sites
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/figma/F24E1E" alt="UI/UX" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#F24E1E&quot;>UX</span>'">
+          UI/UX
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/adobe/FF0000" alt="Branding Pages" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#FF0000&quot;>B</span>'">
+          Branding Pages
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/netlify/00C7B7" alt="Fast Hosting" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#00C7B7&quot;>H</span>'">
+          Fast Hosting
+        </span>
+      </div>
+      <p class="sdesc">Get a custom website, landing page, or e-commerce store built quickly with mobile-first design and easy updates.</p>
+      <button type="button" class="request-btn" onclick="selectService('Website Design')">Request Web Design</button>
+    </div>
+
+    <!-- Other Services -->
+    <div class="scard reveal d2">
+      <div class="shead">
+        <div class="sicon" style="background:rgba(168,85,247,.1)">🛠️</div>
+        <div class="stname">Other Services</div>
+      </div>
+      <div class="tags">
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/microsoftword/2B579A" alt="Document Editing" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#2B579A&quot;>D</span>'">
+          Document Editing
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/adobephotoshop/31A8FF" alt="Image Editing" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#31A8FF&quot;>I</span>'">
+          Image Editing
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/google/4285F4" alt="SEO Setup" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#4285F4&quot;>S</span>'">
+          SEO Setup
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Social Media" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#1877F2&quot;>SM</span>'">
+          Social Media
+        </span>
+        <span class="tag">
+          <img src="https://cdn.simpleicons.org/vpn/000000" alt="VPN Setup" onerror="this.outerHTML='<span class=&quot;tag-ico&quot; style=&quot;background:#000;color:#fff&quot;>V</span>'">
+          VPN Setup
+        </span>
+      </div>
+      <p class="sdesc">Explain the custom task you need — from editing to digital services — and we'll create a tailored offer.</p>
+      <button type="button" class="request-btn" onclick="selectService('Other Services')">Request a Custom Service</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================ 
+     SEARCH BAR SECTION - Search for Services
+     Edit the placeholder text and button text below
+     ============================================ -->
+<section class="search-section" id="search">
+  <div class="search-container reveal">
+    <div class="sec-lbl"><span>Find What You Need</span></div>
+    <h2 class="sec-title">Quick <span class="g">Service Search</span></h2>
+    <p class="sec-sub">Can't find what you're looking for? Search all our services instantly.</p>
+    <div class="search-bar">
+      <span style="font-size:1.2rem">🔍</span>
+        <input type="text" id="serviceSearch" placeholder="Search for payments, crypto, website design, transfers, and more..." onkeyup="filterServices(this.value)">
+      <button class="search-btn" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Search Services →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ 
+     TESTIMONIALS & REVIEWS SECTION
+     Add more testimonials by copying the .tcard structure below
+     Edit name, title, feedback, and colors
+     ============================================ -->
+<section class="testimonials" id="testimonials">
+  <div class="sec-lbl"><span>Client Success Stories</span></div>
+  <h2 class="sec-title">What Our Customers <span class="g">Say</span></h2>
+  <p class="sec-sub">Real experiences from people who've trusted StanzSub with their digital needs.</p>
+
+  <div class="tgrid">
+    <!-- TESTIMONIAL 1 -->
+    <div class="tcard reveal d1">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"Fastest service I've ever used! Got my subscription activated in minutes. Absolutely reliable and trustworthy. Highly recommended by the am from Osu!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#7c3aed,#06b6d4)">AK</div>
+        <div>
+          <div class="tname">sly </div>
+          <div class="ttitle">Netflix Subscription User</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIAL 2 -->
+    <div class="tcard reveal d2">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"International transfers made simple! No hidden fees, no waiting. StanzSub converted my whole payment process. Game changer!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#06b6d4,#ec4899)">JB</div>
+        <div>
+          <div class="tname">Dell byrd</div>
+          <div class="ttitle">International Transfer Client</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIAL 3 -->
+    <div class="tcard reveal d3">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"Crypto transactions handled perfectly. Fast, secure, and transparent. I've referred 5 friends already!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#ec4899,#f97316)">SL</div>
+        <div>
+          <div class="tname">Sarah Lee</div>
+          <div class="ttitle">Crypto Investor</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIAL 4 -->
+    <div class="tcard reveal d4">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"Gift card delivery is instant! Never had to wait. Customer service is amazing. Best digital service platform!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#f97316,#eab308)">RM</div>
+        <div>
+          <div class="tname">Robert Martinez</div>
+          <div class="ttitle">Regular Customer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIAL 5 -->
+    <div class="tcard reveal d1">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"Payment processing is smooth and reliable. Used StanzSub 20+ times now, never had a single issue!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#a78bfa,#7c3aed)">EC</div>
+        <div>
+          <div class="tname">augestine YbN</div>
+          <div class="ttitle">Business Owner</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIAL 6 -->
+    <div class="tcard reveal d2">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <div class="tcontent">"Finally found a reliable platform for all my digital needs. One stop shop! Saved me so much time and stress!"</div>
+      <div class="tauthor">
+        <div class="tavatar" style="background:linear-gradient(135deg,#06b6d4,#22d3ee)">MJ</div>
+        <div>
+          <div class="tname">Marcus Johnson</div>
+          <div class="ttitle">Power User</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="sec-lbl"><span>Simple Process</span></div>
+  <h2 class="sec-title">How It <span class="g">Works</span></h2>
+  <p class="sec-sub">Get started in minutes. No complicated steps — just fast, reliable service.</p>
+  <div class="steps">
+    <div class="step reveal d1">
+      <div class="step-n">01</div>
+      <h3>Reach Out</h3>
+      <p>Contact us via WhatsApp or direct message and tell us what service you need.</p>
+    </div>
+    <div class="step reveal d2">
+      <div class="step-n">02</div>
+      <h3>Confirm &amp; Pay</h3>
+      <p>We confirm the details, agree on a rate, and you send payment securely.</p>
+    </div>
+    <div class="step reveal d3">
+      <div class="step-n">03</div>
+      <h3>Delivered Instantly</h3>
+      <p>Your service is delivered fast — subscriptions, transfers, cards, and more.</p>
+    </div>
+  </div>
+</section>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="cin">
+    <div class="sec-lbl"><span>Reach Us</span></div>
+    <h2 class="sec-title">Get In <span class="g">Touch</span></h2>
+    <p class="sec-sub">Ready to place an order? Reach out through any of these channels.</p>
+    <p class="sec-small">Fast loading, SEO-friendly, and robot-ready for smooth service requests.</p>
+
+    <div class="cgrid reveal">
+      <a href="https://wa.me/233546685114" target="_blank" class="ccard">
+        <div class="c-icon" style="background:rgba(37,211,102,.12)">
+          <img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp" onerror="this.outerHTML='<span style=font-size:1.4rem>💬</span>'">
+        </div>
+        <div><div class="c-lbl">WhatsApp</div><div class="c-val">Click to Chat →</div></div>
+      </a>
+      <div class="ccard">
+        <div class="c-icon" style="background:rgba(168,85,247,.12)">
+          <svg fill="#c084fc" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+        </div>
+        <div><div class="c-lbl">Direct Message</div><a href="https://wa.me/233546685114" target="_blank" class="c-val">Send a Message →</a></div>
+      </div>
+    </div>
+
+    <div class="cinfo reveal">
+      <div class="ccard">
+        <div class="c-icon" style="background:rgba(168,85,247,.1)">
+          <svg fill="#a78bfa" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div><div class="c-lbl">Email</div><div class="c-val">daviskyeibaffour494@gmail.com</div></div>
+      </div>
+      <a href="tel:+223546685114" class="ccard">
+        <div class="c-icon" style="background:rgba(6,182,212,.1)">
+          <svg fill="#22d3ee" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div><div class="c-lbl">Click to Call</div><div class="c-val">+223 546 685 114</div></div>
+      </a>
+      <div class="ccard">
+        <div class="c-icon" style="background:rgba(59,130,246,.1)">
+          <svg fill="#60a5fa" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div><div class="c-lbl">Location</div><div class="c-val">Worldwide 🌍</div></div>
+      </div>
+    </div>
+
+    <div class="cta-box reveal">
+      <h3>Ready to get started?</h3>
+      <p>Choose a service, describe your request, and send it directly to our Formspree inbox.</p>
+      <form id="serviceRequestForm" action="https://formspree.io/f/xrejpdep" method="POST" target="_blank" class="service-form">
+        <input type="hidden" name="_subject" value="New service request from StanzSub website">
+        <div class="form-row">
+          <label>
+            Your Name
+            <input type="text" name="name" placeholder="John Doe" required>
+          </label>
+          <label>
+            Your Email
+            <input type="email" name="_replyto" placeholder="email@example.com" required>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            Phone
+            <input type="tel" name="phone" placeholder="+1 555 123 4567">
+          </label>
+          <label>
+            Service Requested
+            <select name="service" id="selectedService" required>
+              <option value="">Select a service</option>
+              <option>Instant Payments</option>
+              <option>Bank Transfers</option>
+              <option>International Transfers</option>
+              <option>Gift Cards</option>
+              <option>Virtual Numbers</option>
+              <option>Subscriptions</option>
+              <option>Crypto</option>
+              <option>Website Design</option>
+              <option>Other Services</option>
+            </select>
+          </label>
+        </div>        <label class="honeypot">
+          Leave this field empty
+          <input type="text" name="_gotcha" autocomplete="off" tabindex="-1">
+        </label>        <label>
+          Request Details
+          <textarea name="message" placeholder="Describe exactly what you need, including platforms, amounts, brands, and delivery details." required></textarea>
+        </label>
+        <div class="form-note">Your request will go straight to our Formspree inbox. We'll reply as soon as possible.</div>
+        <div class="submit-group">
+          <button type="submit" class="btn-p">Send Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="policy reveal">
+  <div class="policy-box">
+    <div class="sec-lbl"><span>Refund Policy</span></div>
+    <h2 class="sec-title">Simple, Fair <span class="g">Refunds</span></h2>
+    <p class="sec-sub">If your request is not delivered as agreed, we review every order and provide a refund when the issue is verified.</p>
+    <ul class="policy-list">
+      <li>Refunds are available for undelivered or incomplete orders.</li>
+      <li>Please submit any issues within 24 hours after the promised delivery time.</li>
+      <li>We will respond quickly and resolve your concern or return your payment.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fin">
+    <div>
+      <div class="flogo"><span class="g">StanzSub</span></div>
+      <div class="fco">© 2025 StanzSub. All Rights Reserved.</div>
+    </div>
+    <div class="fbadges">
+      <span class="fb"><span class="fbd" style="background:#22c55e"></span>Trusted</span>
+      <span class="fb"><span class="fbd" style="background:#3b82f6"></span>Secure</span>
+      <span class="fb"><span class="fbd" style="background:#a855f7"></span>24/7 Support</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ============================================
+     SCROLL REVEAL ANIMATION FUNCTION
+     Reveals elements when they come into view (slow motion effect)
+     Change threshold value to adjust when elements appear
+     ============================================ */
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  /* ============================================
+     NAVIGATION SHADOW ON SCROLL
+     Adds shadow effect when user scrolls down
+     Adjust the scrollY value (20) to change trigger point
+     ============================================ */
+  window.addEventListener('scroll',()=>{
+    document.getElementById('topnav').style.boxShadow = scrollY>20?'0 4px 30px rgba(0,0,0,.5)':'none';
+  });
+
+  /* ============================================
+     SERVICE SEARCH FILTER FUNCTION
+     Filters service cards based on search input
+     Works with all service names and tags
+     ============================================ */
+  function filterServices(searchTerm) {
+    const services = document.querySelectorAll('.scard');
+    const searchLower = searchTerm.toLowerCase();
+    
+    services.forEach(service => {
+      const text = service.innerText.toLowerCase();
+      if(text.includes(searchLower)) {
+        service.style.display = 'block';
+        service.style.animation = 'slowPulse 8s ease-in-out infinite';
+      } else {
+        service.style.display = 'none';
+      }
+    });
+  }
+
+  function selectService(serviceName) {
+    const serviceSelect = document.getElementById('selectedService');
+    if(serviceSelect) {
+      serviceSelect.value = serviceName;
+      document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+      serviceSelect.focus();
+    }
+  }
+
+  const serviceForm = document.getElementById('serviceRequestForm');
+  if(serviceForm) {
+    serviceForm.addEventListener('submit', (e) => {
+      const honeypot = serviceForm.querySelector('input[name="_gotcha"]');
+      if(honeypot && honeypot.value.trim() !== '') {
+        e.preventDefault();
+        alert('Spam protection blocked your submission. Leave the hidden field empty.');
+      }
+    });
+  }
+
+  /* ============================================
+     RESET SEARCH FILTER
+     Shows all services again when search is cleared
+     Called automatically when input is empty
+     ============================================ */
+  const searchInput = document.getElementById('serviceSearch');
+  if(searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      if(e.target.value === '') {
+        document.querySelectorAll('.scard').forEach(s => s.style.display = 'block');
+      }
+    });
+  }
+</script>
+</body>
+</html>
